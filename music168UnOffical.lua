@@ -6,7 +6,7 @@ local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
     "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
-if not fs.exists(mypath .. "/speakerUnOffical.lua") then shell.run("wget https://raw.githubusercontent.com/tianmanjun/Some-CCTweak-Codes-LOL/refs/heads/main/speakerUnOffical.lua") end
+if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
 
 --*GUI库导入
 basalt            = require(mypath .. "/lib/basalt")
@@ -319,7 +319,7 @@ function Search(input_str, GUI_in, api)
                     frame = play_lib_F:addFrame():setPosition(2, a):setSize("parent.w-2", 3):setBackground(colors
                     .lightBlue):onClick(function()
                         if play_data_table["play"] then
-                            shell.run(mypath .. "/speakerUnOffical.lua stop")
+                            shell.run(mypath .. "/speaker.lua stop")
                             if _G.Playopen then end
                             _G.music168_playopen = false
                             play_data_table["play"] = false
@@ -393,7 +393,7 @@ function thread2()
             if play_data_table["play_table_index"] ~= play_table_Gui[3]:getItemIndex() then
                 index = play_table_Gui[3]:getItemIndex()
                 if play_data_table["play"] then
-                    shell.run(mypath .. "/speakerUnOffical.lua stop")
+                    shell.run(mypath .. "/speaker.lua stop")
                     if _G.Playopen then
 
                     end
@@ -430,8 +430,8 @@ function speakerp()
                 sleep(1)
             end
         end)]]
-       basalt.debug(_G.whilecs_1)
-         time = 0
+       basalt.debug(_G.setPlay)
+        time = GetmusicTime(_G.music168_music_id) * _G.getPlay
         play_Gui[11]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000))
         --basalt.debug(mypath)
         --shell.run(mypath.."/speaker play "..dfpwmURL.readAll())
@@ -457,7 +457,7 @@ function speakerp()
             end
             time = GetmusicTime(_G.music168_music_id)
             play_Gui[12]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000))
-            shell.run(mypath .. "/speakerUnOffical play " .. dfpwmURL)
+            shell.run(mypath .. "/speaker play " .. dfpwmURL)
             play_set_0()
         end
     end
