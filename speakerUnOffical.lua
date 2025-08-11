@@ -152,7 +152,7 @@ elseif cmd == "play" then
     achunk_1 = handle.readAll()
     local achunk_s = achunk_1
     local achunk_K = #achunk_1
-    _G.whilecs_1 = 0
+    whilecs_1 = 0
     _G.setPlay = nil
 
     function play1()
@@ -187,26 +187,26 @@ elseif cmd == "play" then
                     for _, speaker in pairs(speakers) do
                         speaker.stop()
                     end
-                    _G.whilecs_1 = math.floor((setPlay / 100) * achunk_ZK)
+                    whilecs_1 = math.floor((setPlay / 100) * achunk_ZK)
 
-                    achunk_1 = achunk_s:sub(size*_G.whilecs_1,-1)
+                    achunk_1 = achunk_s:sub(size*whilecs_1,-1)
                     chunk = achunk_1:sub(0,size)
                     achunk_1 = achunk_1:sub(size+1,-1)
                     _G.setPlay = nil
                     b1 = true
                 end
 
-                local f = _G.whilecs_1 / achunk_ZK
+                local f = whilecs_1 / achunk_ZK
                 _G.getPlay = f
                 if _G.Playprint then
                     term.clear()
                     displayProgressBar(f*100)
-                    print(_G.whilecs_1)
+                    print(whilecs_1)
                     print(achunk_ZK)
                     print(f)
                 end
                 
-                _G.whilecs_1 = _G.whilecs_1+1
+                whilecs_1 = whilecs_1+1
                 
                 if f >= 1 then break end
                 
