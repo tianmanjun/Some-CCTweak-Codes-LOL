@@ -468,7 +468,7 @@ end
 getPyTable()
 
 function pinyin(chars, isString, separator)
-    separator = separator or ' '
+    separator = separator or ''
     local pinyin, sp = {}, {}
     for i = 1, utf8.len(chars) do
         local char = utf8.sub(chars, i, 1)
