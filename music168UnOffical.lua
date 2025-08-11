@@ -5,7 +5,7 @@
 local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
-    "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
+    "wget https://raw.githubusercontent.com/Pyroxenium/Basalt2/refs/heads/main/release/basalt.lua lib/basalt.lua") end
 if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
 if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://github.com/tianmanjun/Some-CCTweak-Codes-LOL/raw/refs/heads/main/pinyin.lua lib/pinyin.lua") end
 --*GUI库导入
