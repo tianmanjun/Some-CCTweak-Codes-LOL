@@ -61,8 +61,7 @@ play_Gui          = {
         :setBackground(colors.red):setForeground(colors.white),
     sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_id / 2, 2):setBackground(
     colors.red):setForeground(colors.white),
-    sub["BF"][1]:addLabel():setText(" "):setPosition(3, 4):setSize("parent.w-4", "parent.h-10"):setBackground(colors
-    .white):setForeground(colors.red),
+    sub["BF"][1]:addCanvas():setPosition(3, 4):setSize("parent.w-4", "parent.h-10"),--image
     sub["BF"][1]:addButton():setPosition(3, "parent.h-5"):setSize(1, 1):setText("\3"):onClick(function() end)
         :setForeground(colors.white):setBackground(colors.red),
     sub["BF"][1]:addButton():setPosition(8, "parent.h-5"):setSize(1, 1):setText("\25"):onClick(function() end)
@@ -249,6 +248,90 @@ function GetOffCharas(Values)
                     return namechanged
 end
 --dfpwm转码
+--------------------------------------------------------------
+-----图片相关------
+---
+function GetImageFromID(MusicID)
+    local jsontb = { ids = tostring(MusicID) }
+    httpi = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
+        { ["Content-Type"] = "application/json" })
+    local tb = textutils.unserialiseJSON(httpi.readAll())
+    local picurl = tb["songs"][1]["al"]["picUrl"]
+    local requestData = {
+        input_url = picurl,
+        args = { "-vf", "scale=10:10", "-q:v", "100" },
+        output_format = "bmp"
+    }
+    local response, err = http.post(
+        "http://newgmapi.liulikeji.cn/api/ffmpeg",
+        textutils.serializeJSON(requestData),
+        { ["Content-Type"] = "application/json" }
+    )
+    local re_str = response.readAll()
+    local re_tb = textutils.unserializeJSON(re_str)
+    response.close()
+    return re_tb.download_url
+end
+
+function printHex(str)
+    for i = 1, #str do
+        local chr = string.sub(str, i, i)
+        print(string.format("%2X", chr))
+        print(strToHex)
+    end
+end
+
+local function hexencode(str)
+    return (str:gsub(".", function(char) return string.format("%2x", char:byte()) end))
+end
+
+
+
+function hexdecode(hex_str)
+    hex_str = hex_str:gsub("%s", ""):upper()
+    local bytes = {}
+    for i = #hex_str, 1, -2 do
+        bytes[#bytes + 1] = hex_str:sub(i - 1, i)
+    end
+    local big_endian = table.concat(bytes)
+    return tonumber(big_endian, 16)
+end
+local precolors = {
+    { 240, 240, 240,  1 },
+    { 242, 178, 51,   2 },
+    { 229, 127, 216,  4 },
+    { 153, 178, 242,  8 },
+    { 222, 222, 108,  16 },
+    { 127, 204, 25,   32 },
+    { 242, 178, 204,  64 },
+    { 76,  76,  76,   128 },
+    { 153, 153, 153,  256 },
+    { 76,  153, 178,  512 },
+    { 178, 102, 229,  1024 },
+    { 51,  102, 204,  2048 },
+    { 127, 102, 76,   4096 },
+    { 87,  166, 78,   8192 },
+    { 204, 76,  76,   16384 },
+    { 17,  17,  17,   32768 }
+}
+function imageload(posx, posy, hex)
+    local index = 0
+    for i = 109, #hex, 8 do
+        index = index + 1
+        local ColorHex = string.sub(hex, i, i + 7)
+        local r = tonumber(string.sub(ColorHex, 1, 1), 16) * 16 + tonumber(string.sub(ColorHex, 2, 2), 16)
+        local g = tonumber(string.sub(ColorHex, 3, 3), 16) * 16 + tonumber(string.sub(ColorHex, 4, 4), 16)
+        local b = tonumber(string.sub(ColorHex, 5, 5), 16) * 16 + tonumber(string.sub(ColorHex, 6, 6), 16)
+        local color = 1
+        for j=1 , #precolors do
+            if math.abs(r-precolors[j][1])+math.abs(g-precolors[j][2])+math.abs(b-precolors[j][3]) < math.abs(r-precolors[color][1])+math.abs(g-precolors[color][2])+math.abs(b-precolors[color][3]) then
+                color = j
+                --print(string.format("for %d,%d,%d find %d,%d,%d",r,g,b,precolors[j][1],precolors[j][2],precolors[j][3]))
+            end
+        end
+        play_Gui[4].fg(index % 10, math.floor(index / 10),precolors[color][4])
+    end
+end
 
 --播放
 function playmusic(music_name, music_id, play_table, index)
@@ -271,8 +354,10 @@ function playmusic(music_name, music_id, play_table, index)
     end
     play_table_Gui[3]:selectItem(index)
     _G.music168_music_id = music_id
-
     _G.music168_playopen = true
+    local bmphex = hexencode(http.get(GetImageFromID(music_id)).readAll())
+    loadimage(0,0,bmphex)
+
     --basalt.debug("true")
     --play_thread_id = AddThread(function ()
     --
