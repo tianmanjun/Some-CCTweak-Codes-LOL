@@ -238,6 +238,15 @@ function GetOffCharas(Values)
                     namechanged = string.gsub(namechanged,'【','[')
                     namechanged = string.gsub(namechanged,'？','?')
                     namechanged = string.gsub(namechanged,'！','!')
+                    namechanged = string.gsub(namechanged,'《','<<')
+                    namechanged = string.gsub(namechanged,'》','>>')
+                    namechanged = string.gsub(namechanged,'￥','$')
+                    namechanged = string.gsub(namechanged,'…','...')
+                    namechanged = string.gsub(namechanged,'（','(')
+                    namechanged = string.gsub(namechanged,'）',')')
+                    namechanged = string.gsub(namechanged,'；',';')
+                    namechanged = string.gsub(namechanged,'：',':')
+                    namechanged = string.gsub(namechanged,'',':')
                     return namechanged
 end
 --dfpwm转码
