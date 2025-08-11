@@ -17,7 +17,7 @@ main              = {
 }
 _G.Playprint      = false
 _G.Playopen       = false
-
+_G.PlayTime       = 0
 --*GUI框架配置表
 local sub         = {
     ["UI"] = {
@@ -430,8 +430,8 @@ function speakerp()
                 sleep(1)
             end
         end)]]
-       basalt.debug(_G.setPlay)
-        time = GetmusicTime(_G.music168_music_id) * _G.getPlay
+        basalt.debug(_G.getPlay)
+        time = _G.PlayTime * _G.getPlay
         play_Gui[11]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000))
         --basalt.debug(mypath)
         --shell.run(mypath.."/speaker play "..dfpwmURL.readAll())
@@ -456,6 +456,7 @@ function speakerp()
                 dfpwmURL = responseData.download_url
             end
             time = GetmusicTime(_G.music168_music_id)
+            _G.PlayTime = time
             play_Gui[12]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000))
             shell.run(mypath .. "/speaker play " .. dfpwmURL)
             play_set_0()
