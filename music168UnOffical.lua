@@ -10,7 +10,7 @@ if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liu
 if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://raw.githubusercontent.com/MissinA/pinyin/refs/heads/master/pinyin.lua lib/pinyin.lua") end
 --*GUI库导入
 basalt            = require(mypath .. "/lib/basalt")
-pinyin            = require(mypath .. "/lib/pinyin.lua")
+pinyin            = require(mypath .. "/lib/pinyin")
 --*初始化GUI框架
 local mainf       = basalt.createFrame()
 main              = {
@@ -335,7 +335,8 @@ function Search(input_str, GUI_in, api)
                     name,sname = pinyin(value["name"],ture," ")
                     frame:addLabel():setText(name):setPosition(1, 1)
                     frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
-                    frame:addLabel():setText("artists: " .. pinyin(value["artists_name"],ture," ")):setPosition(1, 3)
+                    artistp,sartistp = pinyin(value["artists_name"],ture," ")
+                    frame:addLabel():setText("artists: " .. artistp ):setPosition(1, 3)
                     a = a + 4
                 end
                 break;
