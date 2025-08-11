@@ -7,9 +7,10 @@ local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
     "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
 if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
-
+if not fs.exists(mypath .. "/pinyin.lua") then shell.run("wget https://raw.githubusercontent.com/MissinA/pinyin/refs/heads/master/pinyin.lua")
 --*GUI库导入
 basalt            = require(mypath .. "/lib/basalt")
+pinyin            = require(mypath .. "/pinyin.lua")
 --*初始化GUI框架
 local mainf       = basalt.createFrame()
 main              = {
@@ -331,9 +332,9 @@ function Search(input_str, GUI_in, api)
                         playmusic(value["name"], value["id"], Search_table, index
                     )
                     end)
-                    frame:addLabel():setText(value["name"]):setPosition(1, 1)
+                    frame:addLabel():setText(pinyin(value["name"],ture," ")):setPosition(1, 1)
                     frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
-                    frame:addLabel():setText("artists: " .. value["artists_name"]):setPosition(1, 3)
+                    frame:addLabel():setText("artists: " .. pinyin(value["artists_name"],ture," ")):setPosition(1, 3)
                     a = a + 4
                 end
                 break;
