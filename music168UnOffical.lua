@@ -268,7 +268,7 @@ function GetCoverImageFromID(MusicID)
     )
      re_str = iresponse.readAll()
      re_tb = textutils.unserializeJSON(re_str)
-    iresponse.close()
+    
     return re_tb.download_url
 end
 function hexencode(str)
@@ -551,7 +551,6 @@ function speakerp()
             )
             if response then
                 local responseData = textutils.unserializeJSON(response.readAll())
-                response.close()
                 dfpwmURL = responseData.download_url
             end
             time = GetmusicTime(_G.music168_music_id)
