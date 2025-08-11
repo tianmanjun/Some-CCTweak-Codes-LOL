@@ -255,7 +255,7 @@ function playmusic(music_name, music_id, play_table, index)
     _G.getPlay = 0
     _G.Playopen = false
     _G.Playstop = false
-    name,sname = pinyin(GetOffCharas(music_name),true)
+    name,sname = pinyin(GetOffCharas(music_name),true,'')
     play_Gui[2]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #music_name / 2, 1)
     play_Gui[3]:setText(music_id):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #tostring(music_id) / 2, 2)
     play_column_Gui[1]:setText(name .. " | " .. tostring(music_id))
@@ -266,7 +266,7 @@ function playmusic(music_name, music_id, play_table, index)
 
     play_table_Gui[3]:clear()
     for index, value in ipairs(play_table) do
-        name,sname = pinyin(GetOffCharas(value["name"]),true)
+        name,sname = pinyin(GetOffCharas(value["name"]),true,'')
         play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]))
     end
     play_table_Gui[3]:selectItem(index)
@@ -355,10 +355,10 @@ function Search(input_str, GUI_in, api)
                     )
                     end)
                     
-                    name,sname = pinyin(GetOffCharas(value["name"]),true)
+                    name,sname = pinyin(GetOffCharas(value["name"]),true,'')
                     frame:addLabel():setText(name):setPosition(1, 1)
                     frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
-                    artistp,sartistp = pinyin(GetOffCharas(value["artists_name"]),true)
+                    artistp,sartistp = pinyin(GetOffCharas(value["artists_name"]),true,'')
                     frame:addLabel():setText("artists: " .. artistp ):setPosition(1, 3)
                     a = a + 4
                 end
