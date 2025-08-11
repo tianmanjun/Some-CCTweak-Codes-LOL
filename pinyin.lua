@@ -201,11 +201,11 @@ local data = {
     min = '民敏闽皿悯抿泯岷闵苠珉玟黾愍鳘缗蠠䃉䂥碈砇垊琝瑉琘䁕盿湣潣旻旼䟨䡅罠䡑䡻㟭崏㞶䪸敯刡㥸鴖暋㟩敃惽怋憫忟鍲鈱䲄錉㨉捪笽笢簢勄慜鰵閩冺痻閔姄僶緡㢯䋋黽緍忞',
     ming = '明命名鸣铭冥螟茗瞑酩溟暝蓂眀眳洺㫥鳴朙㟰慏䊅鄍䒌䫤覭㝠䆩䆨䄙銘猽掵榠凕嫇姳佲詺',
     miu = '谬缪謬',
-    mo = '么没模末默莫摸脉磨冒膜摩墨漠魔抹沫陌寞摹蓦蟆蘑馍谟茉貉秣殁貘万貊耱麽镆瘼嫫嬷嬷靺䒬莈驀㱳謩藦䮬砞䩋礳䃺䏞貃䳮塻圽歿歾瞙眜瞐䁼眽眿尛蛨黙昩䘃蟔嗼嚤䁿㱄髍帞帓懡糢㷬爅㷵䯢劘麼䜆庅鏌銆魹䱅魩獏㹮皌擵枺橅䴲䉑妺嫼嬤饃䬴饝纆絈謨嘿',
+    mo = '么没模末默莫摸脉磨冒膜摩墨漠魔抹沫陌寞摹蓦蟆蘑馍谟茉貉秣殁貘貊耱麽镆瘼嫫嬷嬷靺䒬莈驀㱳謩藦䮬砞䩋礳䃺䏞貃䳮塻圽歿歾瞙眜瞐䁼眽眿尛蛨黙昩䘃蟔嗼嚤䁿㱄髍帞帓懡糢㷬爅㷵䯢劘麼䜆庅鏌銆魹䱅魩獏㹮皌擵枺橅䴲䉑妺嫼嬤饃䬴饝纆絈謨嘿',
     mou = '某谋牟眸缪呣哞鍪蛑侔䥐劺鴾䏬䗋踎䍒恈䱕㭌麰繆謀',
     mu = '目母木模莫幕牧亩墓姆慕穆暮姥牡拇睦募沐牟缪苜钼毪坶仫莯䧔鞪䱯楘㜈牳砪氁胟雮霂畞䀲暯蚞踇畂畮峔幙慔毣炑䥈鉬狇鉧㣎㧅䑵艒㾇凩㒇縸䊾畆畝畒',
     na = '那哪拿纳娜呐捺衲钠内南肭镎靹蒳䖓乸䫱貀豽䏧雫䀑㴸䖧䟜吶㗙嗱軜䎎䪏袦鈉魶䱹鎿㨥䅞笝䇱郍䇣䈫拏妠搻納䛔',
-    nai = '奶耐乃奈萘氖迺艿能鼐柰孻螚䘅䯮腉渿褦釢錼㮈㲡廼㮏疓㾍䍲嬭倷',
+    nai = '奶耐乃奈萘氖迺艿鼐柰孻螚䘅䯮腉渿褦釢錼㮈㲡廼㮏疓㾍䍲嬭倷',
     nan = '难南男喃楠囡赧囝腩蝻䕼䔜萳戁難莮䔳遖䁪湳暔㫱㽖畘䶲煵揇抩枏柟䈒㓓婻娚侽諵䛁',
     nang = '囊囔曩馕攮䂇嚢灢㶞蠰乪擃欜齉儾㒄饢',
     nao = '脑闹恼挠瑙呶孬桡淖铙硇垴蛲猱夒䃩碙碯臑脳腦䑋䴃堖鬧蟯巎嶩悩憹怓惱鐃獶獿峱㺀㺁撓䄩閙嫐㞪㛴䫸㑎匘譊䛝詉䜀䜧',
@@ -468,7 +468,7 @@ end
 getPyTable()
 
 function pinyin(chars, isString, separator)
-    separator = separator or ''
+    separator = separator or ' '
     local pinyin, sp = {}, {}
     for i = 1, utf8.len(chars) do
         local char = utf8.sub(chars, i, 1)
@@ -477,8 +477,14 @@ function pinyin(chars, isString, separator)
             pinyin[i] = char
             sp[i] = char
         else
-            pinyin[i] = pyTable[char] .. " "
-            sp[i] = string.sub(pinyin[i], 1, 1)
+            local success,err = pcall(function()
+                pinyin[i] = pyTable[char] .. " "
+                sp[i] = string.sub(pinyin[i], 1, 1)
+            end)
+            if not success then
+                pinyin[i] = "[?]"
+                sp[i] = "[?]"
+            end
         end
     end
     if isString then
