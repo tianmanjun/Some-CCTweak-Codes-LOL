@@ -271,7 +271,7 @@ function GetCoverImageFromID(MusicID)
     iresponse.close()
     return re_tb.download_url
 end
- function hexencode(str)
+function hexencode(str)
     return (str:gsub(".", function(char) return string.format("%2x", char:byte()) end))
 end
 function hexdecode(hex_str)
@@ -284,7 +284,7 @@ function hexdecode(hex_str)
     return tonumber(big_endian, 16)
 end
 
- precolors = {
+precolors = {
     { 240, 240, 240,  1 },
     { 242, 178, 51,   2 },
     { 229, 127, 216,  4 },
@@ -346,6 +346,8 @@ function playmusic(music_name, music_id, play_table, index)
     _G.music168_music_id = music_id
 
     _G.music168_playopen = true
+    bmphex = hexencode(http.get(GetCoverImageFromID(music_id)).readAll())
+    imageload(0,0,bmphex)
     --basalt.debug("true")
     --play_thread_id = AddThread(function ()
     --
