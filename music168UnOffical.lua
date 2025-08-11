@@ -377,10 +377,6 @@ function thread2()
         --
         if _G.getPlay ~= nil then
             play_Gui[10]:setProgress(_G.getPlay * 100)
-            basalt.debug(_G.getPlay)
-            basalt.debug(_G.PlayTime)
-            time = _G.PlayTime * _G.getPlay
-            play_Gui[11]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000))
         end
         if play_data_table["play"] == true then
             _G.Playstop = false
@@ -465,7 +461,7 @@ function speakerp()
         end
     end
 
-    function while_thread() while _G.music168_playopen do sleep(0.01) end end
+    function while_thread() while _G.music168_playopen do sleep(0.01) time = _G.PlayTime * _G.getPlay play_Gui[11]:setText(string.format("%02d",math.floor(time/60000))..":"..string.format("%02d",math.floor((time - math.floor(time/60000)*60000))/1000)) end end
 
     while true do
         if _G.music168_playopen then parallel.waitForAny(speaker_thread, while_thread) end
