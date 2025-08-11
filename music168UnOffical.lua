@@ -5,7 +5,7 @@
 local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
-    "wget https://github.com/Pyroxenium/Basalt/releases/download/v1.7/basalt.lua lib/basalt.lua") end
+    "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
 if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
 if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://github.com/tianmanjun/Some-CCTweak-Codes-LOL/raw/refs/heads/main/pinyin.lua lib/pinyin.lua") end
 --*GUI库导入
@@ -61,7 +61,8 @@ play_Gui          = {
         :setBackground(colors.red):setForeground(colors.white),
     sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_id / 2, 2):setBackground(
     colors.red):setForeground(colors.white),
-    sub["BF"][1]:getCanvas():setPosition(3, 4):setSize("parent.w-4", "parent.h-10"),--image
+    sub["BF"][1]:addLabel():setText(""):setPosition(3, 4):setSize("parent.w-4", "parent.h-10"):setBackground(colors
+    .white):setForeground(colors.red),--image
     sub["BF"][1]:addButton():setPosition(3, "parent.h-5"):setSize(1, 1):setText("\3"):onClick(function() end)
         :setForeground(colors.white):setBackground(colors.red),
     sub["BF"][1]:addButton():setPosition(8, "parent.h-5"):setSize(1, 1):setText("\25"):onClick(function() end)
@@ -248,9 +249,7 @@ function GetOffCharas(Values)
                     return namechanged
 end
 --dfpwm转码
---------------------------------------------------------------
------图片相关------
----
+--------------图片相关------------------
 function GetImageFromID(MusicID)
     local jsontb = { ids = tostring(MusicID) }
     httpi = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
@@ -272,21 +271,9 @@ function GetImageFromID(MusicID)
     response.close()
     return re_tb.download_url
 end
-
-function printHex(str)
-    for i = 1, #str do
-        local chr = string.sub(str, i, i)
-        print(string.format("%2X", chr))
-        print(strToHex)
-    end
-end
-
 local function hexencode(str)
     return (str:gsub(".", function(char) return string.format("%2x", char:byte()) end))
 end
-
-
-
 function hexdecode(hex_str)
     hex_str = hex_str:gsub("%s", ""):upper()
     local bytes = {}
@@ -296,6 +283,7 @@ function hexdecode(hex_str)
     local big_endian = table.concat(bytes)
     return tonumber(big_endian, 16)
 end
+
 local precolors = {
     { 240, 240, 240,  1 },
     { 242, 178, 51,   2 },
@@ -329,9 +317,11 @@ function imageload(posx, posy, hex)
                 --print(string.format("for %d,%d,%d find %d,%d,%d",r,g,b,precolors[j][1],precolors[j][2],precolors[j][3]))
             end
         end
-        play_Gui[4].fg(index % 10, math.floor(index / 10),precolors[color][4])
+        play_Gui[index+18]=sub["BF"][1]:addLabel():setText(""):setPosition(3+index % 10, math.floor(index / 10)):setSize(1,1):setBackground(precolors[color][4]):setForeground(precolors[color][4])
     end
 end
+--19
+
 
 --播放
 function playmusic(music_name, music_id, play_table, index)
@@ -346,7 +336,8 @@ function playmusic(music_name, music_id, play_table, index)
     play_data_table["play_table"] = play_table
     play_data_table["play_table_index"] = index
     play_data_table["play"] = true
-
+    bmphex = hexencode(http.get(GetImageFromID(music_id)).readAll())
+    imageload(0,0,bmphex)
     play_table_Gui[3]:clear()
     for index, value in ipairs(play_table) do
         name,sname = pinyin(GetOffCharas(value["name"]),true,'')
@@ -354,10 +345,8 @@ function playmusic(music_name, music_id, play_table, index)
     end
     play_table_Gui[3]:selectItem(index)
     _G.music168_music_id = music_id
-    _G.music168_playopen = true
-    local bmphex = hexencode(http.get(GetImageFromID(music_id)).readAll())
-    loadimage(0,0,bmphex)
 
+    _G.music168_playopen = true
     --basalt.debug("true")
     --play_thread_id = AddThread(function ()
     --
