@@ -473,7 +473,8 @@ function pinyin(chars, isString, separator)
     for i = 1, utf8.len(chars) do
         local char = utf8.sub(chars, i, 1)
         --要寻找的字符串
-        if string.len(char) == 1 then
+        
+        if string.len(char) <= 2 then
             pinyin[i] = char
             sp[i] = char
         else
