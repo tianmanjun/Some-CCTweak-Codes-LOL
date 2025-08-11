@@ -303,9 +303,9 @@ local precolors = {
     { 17,  17,  17,   32768 }
 }
 function imageload(posx, posy, hex)
-    local index = 0
+    local indexz = 0
     for i = 109, #hex, 8 do
-        index = index + 1
+        indexz = indexz + 1
         local ColorHex = string.sub(hex, i, i + 7)
         local r = tonumber(string.sub(ColorHex, 1, 1), 16) * 16 + tonumber(string.sub(ColorHex, 2, 2), 16)
         local g = tonumber(string.sub(ColorHex, 3, 3), 16) * 16 + tonumber(string.sub(ColorHex, 4, 4), 16)
@@ -317,7 +317,7 @@ function imageload(posx, posy, hex)
                 --print(string.format("for %d,%d,%d find %d,%d,%d",r,g,b,precolors[j][1],precolors[j][2],precolors[j][3]))
             end
         end
-        play_Gui[index+18]=sub["BF"][1]:addLabel():setText(""):setPosition(3+index % 10, math.floor(index / 10)):setSize(1,1):setBackground(precolors[color][4]):setForeground(precolors[color][4])
+        play_Gui[indexz+18]=sub["BF"][1]:addLabel():setText(""):setPosition(3+indexz % 10, math.floor(indexz / 10)):setSize(1,1):setBackground(precolors[color][4]):setForeground(precolors[color][4])
     end
 end
 --19
