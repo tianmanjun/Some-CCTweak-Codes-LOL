@@ -346,8 +346,7 @@ function playmusic(music_name, music_id, play_table, index)
     _G.music168_music_id = music_id
 
     _G.music168_playopen = true
-    bmphex = hexencode(http.get(GetCoverImageFromID(music_id)).readAll())
-    imageload(0,0,bmphex)
+    
     --basalt.debug("true")
     --play_thread_id = AddThread(function ()
     --
@@ -552,6 +551,7 @@ function speakerp()
             )
             if response then
                 local responseData = textutils.unserializeJSON(response.readAll())
+                response.close()
                 dfpwmURL = responseData.download_url
             end
             time = GetmusicTime(_G.music168_music_id)
