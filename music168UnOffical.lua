@@ -332,10 +332,10 @@ function Search(input_str, GUI_in, api)
                         playmusic(value["name"], value["id"], Search_table, index
                     )
                     end)
-                    name,sname = pinyin(value["name"],ture," ")
+                    name,sname = pinyin(value["name"],true)
                     frame:addLabel():setText(name):setPosition(1, 1)
                     frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
-                    artistp,sartistp = pinyin(value["artists_name"],ture," ")
+                    artistp,sartistp = pinyin(value["artists_name"],true)
                     frame:addLabel():setText("artists: " .. artistp ):setPosition(1, 3)
                     a = a + 4
                 end
