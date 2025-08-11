@@ -7,10 +7,10 @@ local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
     "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
 if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
-if not fs.exists(mypath .. "/pinyin.lua") then shell.run("wget https://raw.githubusercontent.com/MissinA/pinyin/refs/heads/master/pinyin.lua") end
+if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://raw.githubusercontent.com/MissinA/pinyin/refs/heads/master/pinyin.lua lib/pinyin.lua") end
 --*GUI库导入
 basalt            = require(mypath .. "/lib/basalt")
-pinyin            = require(mypath .. "/pinyin.lua")
+pinyin            = require("/lib/pinyin.lua")
 --*初始化GUI框架
 local mainf       = basalt.createFrame()
 main              = {
