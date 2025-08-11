@@ -61,7 +61,7 @@ play_Gui          = {
         :setBackground(colors.red):setForeground(colors.white),
     sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_id / 2, 2):setBackground(
     colors.red):setForeground(colors.white),
-    sub["BF"][1]:addCanvas():setPosition(3, 4):setSize("parent.w-4", "parent.h-10"),--image
+    sub["BF"][1]:getCanvas():setPosition(3, 4):setSize("parent.w-4", "parent.h-10"),--image
     sub["BF"][1]:addButton():setPosition(3, "parent.h-5"):setSize(1, 1):setText("\3"):onClick(function() end)
         :setForeground(colors.white):setBackground(colors.red),
     sub["BF"][1]:addButton():setPosition(8, "parent.h-5"):setSize(1, 1):setText("\25"):onClick(function() end)
