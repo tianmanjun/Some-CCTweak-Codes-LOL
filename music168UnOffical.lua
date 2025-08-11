@@ -249,7 +249,77 @@ function GetOffCharas(Values)
                     return namechanged
 end
 --dfpwm转码
+--------------图片相关------------------
+function GetCoverImageFromID(MusicID)
+     jsontb = { ids = tostring(MusicID) }
+    httpi = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
+        { ["Content-Type"] = "application/json" })
+     tb = textutils.unserialiseJSON(httpi.readAll())
+     picurl = tb["songs"][1]["al"]["picUrl"]
+     irequestData = {
+        input_url = picurl,
+        args = { "-vf", "scale=10:10", "-q:v", "100" },
+        output_format = "bmp"
+    }
+     iresponse, err = http.post(
+        "http://newgmapi.liulikeji.cn/api/ffmpeg",
+        textutils.serializeJSON(irequestData),
+        { ["Content-Type"] = "application/json" }
+    )
+     re_str = iresponse.readAll()
+     re_tb = textutils.unserializeJSON(re_str)
+    iresponse.close()
+    return re_tb.download_url
+end
+ function hexencode(str)
+    return (str:gsub(".", function(char) return string.format("%2x", char:byte()) end))
+end
+function hexdecode(hex_str)
+    hex_str = hex_str:gsub("%s", ""):upper()
+     bytes = {}
+    for i = #hex_str, 1, -2 do
+        bytes[#bytes + 1] = hex_str:sub(i - 1, i)
+    end
+     big_endian = table.concat(bytes)
+    return tonumber(big_endian, 16)
+end
 
+ precolors = {
+    { 240, 240, 240,  1 },
+    { 242, 178, 51,   2 },
+    { 229, 127, 216,  4 },
+    { 153, 178, 242,  8 },
+    { 222, 222, 108,  16 },
+    { 127, 204, 25,   32 },
+    { 242, 178, 204,  64 },
+    { 76,  76,  76,   128 },
+    { 153, 153, 153,  256 },
+    { 76,  153, 178,  512 },
+    { 178, 102, 229,  1024 },
+    { 51,  102, 204,  2048 },
+    { 127, 102, 76,   4096 },
+    { 87,  166, 78,   8192 },
+    { 204, 76,  76,   16384 },
+    { 17,  17,  17,   32768 }
+}
+function imageload(posx, posy, hex)
+     indexz = 0
+    for i = 109, #hex, 8 do
+        indexz = indexz + 1
+         ColorHex = string.sub(hex, i, i + 7)
+         r = tonumber(string.sub(ColorHex, 1, 1), 16) * 16 + tonumber(string.sub(ColorHex, 2, 2), 16)
+         g = tonumber(string.sub(ColorHex, 3, 3), 16) * 16 + tonumber(string.sub(ColorHex, 4, 4), 16)
+         b = tonumber(string.sub(ColorHex, 5, 5), 16) * 16 + tonumber(string.sub(ColorHex, 6, 6), 16)
+         color = 1
+        for j=1 , #precolors do
+            if math.abs(r-precolors[j][1])+math.abs(g-precolors[j][2])+math.abs(b-precolors[j][3]) < math.abs(r-precolors[color][1])+math.abs(g-precolors[color][2])+math.abs(b-precolors[color][3]) then
+                color = j
+                --print(string.format("for %d,%d,%d find %d,%d,%d",r,g,b,precolors[j][1],precolors[j][2],precolors[j][3]))
+            end
+        end
+        play_Gui[indexz+18]=sub["BF"][1]:addLabel():setText(""):setPosition(3+indexz % 10, math.floor(indexz / 10)):setSize(1,1):setBackground(precolors[color][4]):setForeground(precolors[color][4])
+    end
+end
 --19
 
 
