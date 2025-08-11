@@ -7,7 +7,7 @@ local mypath = "/" .. fs.getDir(shell.getRunningProgram())
 if not fs.exists(mypath .. "/lib/basalt.lua") then shell.run(
     "wget http://alist.liulikeji.cn/d/HFS/Installer/lib/basalt.lua lib/basalt.lua") end
 if not fs.exists(mypath .. "/speaker.lua") then shell.run("wget http://alist.liulikeji.cn/d/HFS/music168/speaker.lua") end
-if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://raw.githubusercontent.com/MissinA/pinyin/refs/heads/master/pinyin.lua lib/pinyin.lua") end
+if not fs.exists(mypath .. "/lib/pinyin.lua") then shell.run("wget https://github.com/tianmanjun/Some-CCTweak-Codes-LOL/raw/refs/heads/main/pinyin.lua lib/pinyin.lua") end
 --*GUI库导入
 basalt            = require(mypath .. "/lib/basalt")
 pinyin            = require(mypath .. "/lib/pinyin")
@@ -225,8 +225,21 @@ function GetmusicTime(music_id)
         end
     end
 end
-
-
+--替换全角符号
+function GetOffCharas(Values)
+                    namechanged = string.gsub(Values,'。','.')
+                    namechanged = string.gsub(namechanged,'，',',')
+                    namechanged = string.gsub(namechanged,'、','&')
+                    namechanged = string.gsub(namechanged,'‘','\'')
+                    namechanged = string.gsub(namechanged,'“','\"')
+                    namechanged = string.gsub(namechanged,'”','\"')
+                    namechanged = string.gsub(namechanged,'’','\"')
+                    namechanged = string.gsub(namechanged,'】',']')
+                    namechanged = string.gsub(namechanged,'【','[')
+                    namechanged = string.gsub(namechanged,'？','?')
+                    namechanged = string.gsub(namechanged,'！','!')
+                    return namechanged
+end
 --dfpwm转码
 
 --播放
@@ -332,10 +345,11 @@ function Search(input_str, GUI_in, api)
                         playmusic(value["name"], value["id"], Search_table, index
                     )
                     end)
-                    name,sname = pinyin(value["name"],true)
+                    
+                    name,sname = pinyin(GetOffCharas(value["name"]),true)
                     frame:addLabel():setText(name):setPosition(1, 1)
                     frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
-                    artistp,sartistp = pinyin(value["artists_name"],true)
+                    artistp,sartistp = pinyin(GetOffCharas(value["artists_name"]),true)
                     frame:addLabel():setText("artists: " .. artistp ):setPosition(1, 3)
                     a = a + 4
                 end
