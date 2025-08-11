@@ -479,7 +479,7 @@ function pinyin(chars, isString, separator)
             sp[i] = char
         else
             local success,err = pcall(function()
-                pinyin[i] = pyTable[char] .. " "
+                pinyin[i] = pyTable[char] .. ' '
                 sp[i] = string.sub(pinyin[i], 1, 1)
             end)
             if not success then
