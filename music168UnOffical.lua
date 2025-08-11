@@ -552,7 +552,6 @@ function speakerp()
             )
             if response then
                 local responseData = textutils.unserializeJSON(response.readAll())
-                response.close()
                 dfpwmURL = responseData.download_url
             end
             time = GetmusicTime(_G.music168_music_id)
