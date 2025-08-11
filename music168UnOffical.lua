@@ -121,7 +121,7 @@ play_table_Gui    = {
         sub["BF"][1]:enable()
         play_table_Gui_DO:play()
     end):setBackground(colors.no):setForeground(colors.white),
-    sub["play_table"][1]:addLabel():setText("PlyaTable"):setPosition(1, 1):setForeground(colors.white),
+    sub["play_table"][1]:addLabel():setText("PlayTable"):setPosition(1, 1):setForeground(colors.white),
     sub["play_table"][1]:addList():setPosition(2, 3):setSize("parent.w-2", "parent.h-2"):setScrollable(true),
 }
 
@@ -266,7 +266,8 @@ function playmusic(music_name, music_id, play_table, index)
 
     play_table_Gui[3]:clear()
     for index, value in ipairs(play_table) do
-        play_table_Gui[3]:addItem(value["name"] .. " | " .. tostring(value["id"]))
+        name,sname = pinyin(GetOffCharas(value["name"]),true)
+        play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]))
     end
     play_table_Gui[3]:selectItem(index)
     _G.music168_music_id = music_id
@@ -296,7 +297,7 @@ function Search(input_str, GUI_in, api)
                 httpGetFromID = http.post(server_url .. "api/song/url", textutils.serialiseJSON({ ["id"] = input_str }))
                 json_str2 = httpGetFromID.readAll()
                 table_get2 = textutils.unserialiseJSON(json_str2)
-                if httpGetFromID then
+                if httpGetFromID and table_get2["data"][1]["size"] ~= 0 then
                     kg_d1 = true
                     value2 = table_get2["data"][1]
                     output2_table = { ["id"] = tonumber(input_str), ["name"] = "NULL", ["artists_id"] = "NULL", ["artists_name"] = "NULL" }
@@ -364,7 +365,7 @@ function Search(input_str, GUI_in, api)
                 break;
             else
                 frame = GUI_in[3]:addFrame():setPosition(2, 2):setSize("parent.w-2", 3):setBackground(colors.lightBlue)
-                frame:addLabel():setText("[songCount] == 0"):setPosition(1, 1)
+                frame:addLabel():setText("Didnt search the song"):setPosition(1, 1)
                 break;
             end
         end
