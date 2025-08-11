@@ -264,6 +264,7 @@ function Search(input_str, GUI_in, api)
     Search_table = {}
     while true do
         kg_a = false
+        kg_d1 = false
         if api == "search" then
             http1 = http.post(server_url .. "api/search", textutils.serialiseJSON({ ["value"] = input_str }))
             json_str = http1.readAll()
