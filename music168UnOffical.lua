@@ -19,6 +19,7 @@ main              = {
 _G.Playprint      = false
 _G.Playopen       = false
 _G.PlayTime       = 0
+_G.UserCookie = ''
 --*GUI框架配置表
 local sub         = {
     ["UI"] = {
@@ -158,6 +159,7 @@ menuBut           = {
         sub["UI"][5]:show()
     end):setForeground(colors.white):setBackground(colors.lightGray),
 }
+
 -----------------------------------------------------------------DATA---------------------------------------------------------------------------------------------------------
 play_data_table   = { ["music"] = {}, ["play"] = false, ["play_table"] = {}, ["play_table_index"] = 0, ["mode"] = "", }
 _G.Playopen       = false
@@ -202,12 +204,21 @@ end
 --获取URL
 function GetmusicUrl(music_id)
     while true do
-        local http = http.post(server_url .. "api/song/url", textutils.serialiseJSON({ ["id"] = music_id }))
-        if http then
-            json_str = http.readAll()
-            local table = textutils.unserialiseJSON(json_str)
-            if table["data"][1]["url"] then
-                return (table["data"][1]["url"])
+        if _G.UserCookie ~= '' then
+            local jsontb = { id = tostring(MusicID), level = "standard", cookie = Cookie }
+            httpi = http.post("https://apis.netstart.cn/music/song/url", textutils.serialiseJSON(jsontb),
+                { ["Content-Type"] = "application/json" })
+            local bstr = httpi.readAll()
+            local tb = textutils.unserialiseJSON(bstr)
+            return tb["data"][1]["url"]
+        else
+            local http = http.post(server_url .. "api/song/url", textutils.serialiseJSON({ ["id"] = music_id }))
+            if http then
+                json_str = http.readAll()
+                local table = textutils.unserialiseJSON(json_str)
+                if table["data"][1]["url"] then
+                    return (table["data"][1]["url"])
+                end
             end
         end
     end
@@ -261,7 +272,7 @@ function GetCoverImageFromID(MusicID)
         args = { "-vf", "scale=10:10", "-q:v", "100" },
         output_format = "bmp"
     }
-     iresponse, err = http.post(
+    iresponse, err = http.post(
         "http://newgmapi.liulikeji.cn/api/ffmpeg",
         textutils.serializeJSON(irequestData),
         { ["Content-Type"] = "application/json" }
@@ -459,8 +470,15 @@ GUI = {
         sub["UI"][4]:addInput():setPosition(2, 1):setSize("parent.w-3", 1):setForeground(colors.gray):setBackground(
         colors.lightGray),
         sub["UI"][4]:addButton():setPosition("parent.w-1", 1):setSize(1, 1):setText("Q"):onClick(function() Search(
-            GUI[1][1]:getValue(), GUI[2], "playlist") end):setForeground(colors.white):setBackground(colors.lightGray),
+            GUI[2][1]:getValue(), GUI[2], "playlist") end):setForeground(colors.white):setBackground(colors.lightGray),
         sub["UI"][4]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white)
+    },
+    {
+        sub["UI"][5]:addInput():setPosition(2, 3):setSize("parent.w-3", 3):setForeground(colors.black):setBackground(
+        colors.red),
+        sub["UI"][5]:addButton():setPosition(1, 1):setSize(5,2):setText("set cookie"):onClick(function() 
+            _G.UserCookie = GUI[3][1]:getValue()
+         end):setForeground(colors.white):setBackground(colors.lightGray),
     },
 }
 
