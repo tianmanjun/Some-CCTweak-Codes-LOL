@@ -388,8 +388,8 @@ function Search(input_str, GUI_in, api)
                 table_get2 = textutils.unserialiseJSON(json_str2)
                 if httpGetFromID and table_get2["songs"][1] then
                     kg_d1 = true
-                    name,sn = pinyin(GetOffCharas(table_get2["songs"][1]["name"]),true,'')
-                    arname,san = pinyin(GetOffCharas(table_get2["songs"][1]["ar"]["name"]),true,'')
+                    name,sn = pinyin(GetOffCharas(table_get2["songs"][1]["name"] or "NULL"),true,'')
+                    arname,san = pinyin(GetOffCharas(table_get2["songs"][1]["ar"][1]["name"] or "NULL"),true,'')
                     output2_table = { ["id"] = tonumber(input_str), ["name"] = name , ["artists_id"] = table_get2["songs"][1]["ar"]["id"], ["artists_name"] = arname }
                     
                 end
