@@ -466,7 +466,7 @@ GUI = {
             GUI[1][1]:getValue(), GUI[1], "search") end):setForeground(colors.white):setBackground(colors.lightGray),
         sub["UI"][1]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white),
         sub["UI"][1]:addButton():setPosition("parent.w-2", 1):setSize(1, 1):setText("X"):onClick(function() 
-            GUI[1][1]:setText("")
+            GUI[1][1]:setValue("")
          end):setForeground(colors.white):setBackground(colors.lightGray),
     },
     {
@@ -476,7 +476,7 @@ GUI = {
             GUI[2][1]:getValue(), GUI[2], "playlist") end):setForeground(colors.white):setBackground(colors.lightGray),
         sub["UI"][4]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white),
         sub["UI"][4]:addButton():setPosition("parent.w-2", 1):setSize(1, 1):setText("X"):onClick(function() 
-            GUI[4][1]:setText("")
+            GUI[2][1]:setValue("")
         end):setForeground(colors.white):setBackground(colors.lightGray),
     },
     {
@@ -487,7 +487,7 @@ GUI = {
         end):setForeground(colors.white):setBackground(colors.red),
         sub["UI"][5]:addFrame():setPosition(1, 4):setSize("parent.w", "parent.h -4"):setBackground(colors.white),
         sub["UI"][5]:addButton(1, 3):setPosition("parent.w", 1):setSize(1, 1):setText("Clear"):onClick(function() 
-            GUI[5][1]:setText("")
+            GUI[3][1]:setValue("")
         end):setForeground(colors.white):setBackground(colors.red),
     },
 }
