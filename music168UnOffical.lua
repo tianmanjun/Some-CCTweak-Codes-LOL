@@ -464,23 +464,31 @@ GUI = {
         colors.lightGray),
         sub["UI"][1]:addButton():setPosition("parent.w-1", 1):setSize(1, 1):setText("Q"):onClick(function() Search(
             GUI[1][1]:getValue(), GUI[1], "search") end):setForeground(colors.white):setBackground(colors.lightGray),
-        sub["UI"][1]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white)
+        sub["UI"][1]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white),
+        sub["UI"][1]:addButton():setPosition("parent.w-2", 1):setSize(1, 1):setText("X"):onClick(function() 
+            GUI[1][1]:setText("")
+         end):setForeground(colors.white):setBackground(colors.lightGray),
     },
     {
         sub["UI"][4]:addInput():setPosition(2, 1):setSize("parent.w-3", 1):setForeground(colors.gray):setBackground(
         colors.lightGray),
         sub["UI"][4]:addButton():setPosition("parent.w-1", 1):setSize(1, 1):setText("Q"):onClick(function() Search(
             GUI[2][1]:getValue(), GUI[2], "playlist") end):setForeground(colors.white):setBackground(colors.lightGray),
-        sub["UI"][4]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white)
+        sub["UI"][4]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white),
+        sub["UI"][4]:addButton():setPosition("parent.w-2", 1):setSize(1, 1):setText("X"):onClick(function() 
+            GUI[4][1]:setText("")
+        end):setForeground(colors.white):setBackground(colors.lightGray),
     },
     {
         sub["UI"][5]:addInput():setPosition(1, 1):setSize("parent.w", 1):setForeground(colors.black):setBackground(
         colors.blue),
         sub["UI"][5]:addButton():setPosition(1, 2):setSize("parent.w",1):setText("set cookie"):onClick(function() 
             _G.UserCookie = GUI[3][1]:getValue()
-            GUI[3][2]:setBackground(colors.green):setText("Successful")
         end):setForeground(colors.white):setBackground(colors.red),
-        sub["UI"][5]:addFrame():setPosition(1, 3):setSize("parent.w", "parent.h -3"):setBackground(colors.white)
+        sub["UI"][5]:addFrame():setPosition(1, 4):setSize("parent.w", "parent.h -4"):setBackground(colors.white),
+        sub["UI"][5]:addButton(1, 3):setPosition("parent.w", 1):setSize(1, 1):setText("Clear"):onClick(function() 
+            GUI[5][1]:setText("")
+        end):setForeground(colors.white):setBackground(colors.red),
     },
 }
 
@@ -532,15 +540,9 @@ end
 function paste()
     while true do
         local event, text = os.pullEvent("paste")
-        if basalt.getFocus() == GUI[1][1] then
-            GUI[1][1]:setValue(text)
-        end
-        if basalt.getFocus() == GUI[2][1] then
-            GUI[2][1]:setValue(text)
-        end
-        if basalt.getFocus() == GUI[5][1] then
-            GUI[5][1]:setValue(text)
-        end
+    GUI[1][1]:setValue(text)
+    GUI[2][1]:setValue(text)
+    GUI[5][1]:setValue(text)
     end
 end
 
