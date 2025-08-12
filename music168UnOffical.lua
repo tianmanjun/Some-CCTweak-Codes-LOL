@@ -486,7 +486,7 @@ GUI = {
             _G.UserCookie = GUI[3][1]:getValue()
         end):setForeground(colors.white):setBackground(colors.red),
         sub["UI"][5]:addFrame():setPosition(1, 4):setSize("parent.w", "parent.h -4"):setBackground(colors.white),
-        sub["UI"][5]:addButton(1, 3):setPosition("parent.w", 1):setSize(1, 1):setText("Clear"):onClick(function() 
+        sub["UI"][5]:addButton():setPosition(1, 3):setSize("parent.w", 1):setText("Clear"):onClick(function() 
             GUI[3][1]:setValue("")
         end):setForeground(colors.white):setBackground(colors.red),
     },
