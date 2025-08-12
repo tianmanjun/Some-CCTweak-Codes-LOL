@@ -542,7 +542,7 @@ function paste()
         local event, text = os.pullEvent("paste")
     GUI[1][1]:setValue(text)
     GUI[2][1]:setValue(text)
-    GUI[5][1]:setValue(text)
+    GUI[3][1]:setValue(text)
     end
 end
 
