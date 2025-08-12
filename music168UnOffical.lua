@@ -208,9 +208,11 @@ function GetmusicUrl(music_id)
             local jsontb = { id = tostring(MusicID), level = "standard", cookie = Cookie }
             httpi = http.post("https://apis.netstart.cn/music/song/url", textutils.serialiseJSON(jsontb),
                 { ["Content-Type"] = "application/json" })
+        if httpi then
             local bstr = httpi.readAll()
             local tb = textutils.unserialiseJSON(bstr)
             return tb["data"][1]["url"]
+        end
         else
             local http = http.post(server_url .. "api/song/url", textutils.serialiseJSON({ ["id"] = music_id }))
             if http then
