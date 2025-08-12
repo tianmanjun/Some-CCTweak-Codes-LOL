@@ -532,8 +532,15 @@ end
 function paste()
     while true do
         local event, text = os.pullEvent("paste")
-        GUI[1][1]:setValue(text)
-        GUI[2][1]:setValue(text)
+        if basalt.getFocus() == GUI[1][1] then
+            GUI[1][1]:setValue(text)
+        end
+        if basalt.getFocus() == GUI[2][1] then
+            GUI[2][1]:setValue(text)
+        end
+        if basalt.getFocus() == GUI[5][1] then
+            GUI[5][1]:setValue(text)
+        end
     end
 end
 
