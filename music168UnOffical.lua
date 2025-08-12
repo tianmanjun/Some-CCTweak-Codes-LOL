@@ -383,7 +383,7 @@ function Search(input_str, GUI_in, api)
             if tonumber(input_str) then
             jsontb = { ids = tostring(input_str),timestamp=os.clock()}
             basalt.debug()
-            httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
+            httpGetFromID = http.post(server_url .. "api/song/detail", textutils.serialiseJSON(jsontb),
              { ["Content-Type"] = "application/json" })
                 json_str2 = httpGetFromID.readAll()
                 table_get2 = textutils.unserialiseJSON(json_str2)
