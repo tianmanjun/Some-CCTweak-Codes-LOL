@@ -390,7 +390,7 @@ function Search(input_str, GUI_in, api)
                     kg_d1 = true
                     name,sn = pinyin(GetOffCharas(table_get2["songs"][1]["name"] or "NULL"),true,'')
                     arname,san = pinyin(GetOffCharas(table_get2["songs"][1]["ar"][1]["name"] or "NULL"),true,'')
-                    output2_table = { ["id"] = tonumber(input_str), ["name"] = name , ["artists_id"] = table_get2["songs"][1]["ar"]["id"], ["artists_name"] = arname }
+                    output2_table = { ["id"] = tonumber(input_str), ["name"] = name , ["artists_id"] = table_get2["songs"][1]["ar"][1]["id"], ["artists_name"] = arname }
                     
                 end
             end
