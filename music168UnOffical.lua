@@ -384,9 +384,6 @@ function Search(input_str, GUI_in, api)
             jsontb = { ids = tostring(input_str) }
             httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
              { ["Content-Type"] = "application/json" })
-                repeat
-                    sleep(0.1)
-                until json_str2
                 json_str2 = httpGetFromID.readAll()
                 table_get2 = textutils.unserialiseJSON(json_str2)
                 if httpGetFromID and table_get2["song"][1] then
