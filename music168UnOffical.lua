@@ -381,12 +381,14 @@ function Search(input_str, GUI_in, api)
             table_get = textutils.unserialiseJSON(json_str)
             if table_get["result"]["songCount"] ~= 0 then kg_a = true end
             if tonumber(input_str) then
-                httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON({ ids = input_str }))
+                httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON({ ids = tonumber(input_str) }))
+                repeat
+                    sleep(0.1)
+                until json_str2
                 json_str2 = httpGetFromID.readAll()
                 table_get2 = textutils.unserialiseJSON(json_str2)
-                if httpGetFromID and table_get2["song"][1]["name"] ~= "" then
+                if httpGetFromID and table_get2["song"][1] then
                     kg_d1 = true
-                    value2 = table_get2["data"][1]
                     output2_table = { ["id"] = tonumber(input_str), ["name"] = table_get2["song"][1]["name"], ["artists_id"] = table_get2["song"][1]["ar"]["id"], ["artists_name"] = table_get2["song"][1]["ar"]["name"] }
                     
                 end
