@@ -264,7 +264,7 @@ end
 --dfpwm转码
 --------------图片相关------------------
 function GetCoverImageFromID(MusicID)
-     jsontb = { ids = tostring(MusicID) }
+    jsontb = { ids = tostring(MusicID) }
     httpi = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
         { ["Content-Type"] = "application/json" })
      tb = textutils.unserialiseJSON(httpi.readAll())
@@ -381,7 +381,9 @@ function Search(input_str, GUI_in, api)
             table_get = textutils.unserialiseJSON(json_str)
             if table_get["result"]["songCount"] ~= 0 then kg_a = true end
             if tonumber(input_str) then
-                httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON({ ids = tonumber(input_str) }))
+            jsontb = { ids = tostring(input_str) }
+            httpGetFromID = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
+             { ["Content-Type"] = "application/json" })
                 repeat
                     sleep(0.1)
                 until json_str2
