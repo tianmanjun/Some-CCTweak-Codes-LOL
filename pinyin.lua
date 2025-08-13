@@ -483,8 +483,8 @@ function pinyin(chars, isString, separator)
                 sp[i] = string.sub(pinyin[i], 1, 1)
             end)
             if not success then
-                pinyin[i] = "[?]"
-                sp[i] = "[?]"
+                pinyin[i] = "\7f"
+                sp[i] = "\7f"
             end
         end
     end
