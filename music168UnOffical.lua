@@ -37,10 +37,10 @@ local sub         = {
         main[1]:addFrame():setPosition(1, "parent.h - 1"):setSize("parent.w", 1):setBackground(colors.lightGray):hide(),
     },
     ["play_table"] = {
-        mainf:addFrame():setPosition(2, "parent.h + 1"):setSize("parent.w-2", 13):setBackground(colors.red),
+        mainf:addFrame():setPosition(1, "parent.h + 1"):setSize("parent.w", 13):setBackground(colors.red),
     },
     ["waitplay_table"] = {
-        mainf:addFrame():setPosition(2, "parent.h + 1"):setSize("parent.w-2", 13):setBackground(colors.blue),
+        mainf:addFrame():setPosition(1, "parent.h + 1"):setSize("parent.w", 13):setBackground(colors.blue),
     }
 }
 
@@ -365,7 +365,7 @@ function playmusic(music_name, music_id, play_table, index , artist_name)
     name,sname = pinyin(GetOffCharas(music_name),true,'')
     play_Gui[2]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #music_name / 2, 1)
     name,sname = pinyin(GetOffCharas(music_name),true,'')
-    play_Gui[3]:setText(music_id):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #tostring(music_id) / 2, 2)
+    play_Gui[3]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #tostring(music_id) / 2, 2)
     play_column_Gui[1]:setText(name .. " | " .. tostring(music_id))
     play_data_table["music"] = { ["music_id"] = music_id, ["music_name"] = music_name }
     play_data_table["play_table"] = play_table
@@ -444,7 +444,8 @@ function Search(input_str, GUI_in, api)
             if kg_d1 then
             Search_table[#Search_table + 1] = output2_table
            end
-                a = 2
+                a = 1
+                clr = 1
                 if play_lib_F then play_lib_F:remove() end
                 play_lib_F = GUI_in[3]:addFrame():setPosition(1, 1):setSize("parent.w", "parent.h"):setBackground(colors
                 .white):setScrollable()
@@ -452,8 +453,7 @@ function Search(input_str, GUI_in, api)
                 
 
                 for index, value in ipairs(Search_table) do
-                    frame = play_lib_F:addFrame():setPosition(2, a):setSize("parent.w-2", 3):setBackground(colors
-                    .lightBlue):onClick(function()
+                    frame = play_lib_F:addFrame():setPosition(1, a):setSize("parent.w", 3):setBackground(colors.lightGray):onClick(function()
                         if play_data_table["play"] then
                             shell.run(mypath .. "/speaker.lua stop")
                             if _G.Playopen then end
@@ -465,18 +465,24 @@ function Search(input_str, GUI_in, api)
                         main[1]:disable()
                         playmusic(value["name"], value["id"], Search_table, index, value["artists_name"])
                     end)
-                    
+                    if clr%2 == 0 then
+                        frame:setBackground(colors.lightGray)
+                    else
+                        frame:setBackground(colors.white)
+                    end
                     name,sname = pinyin(GetOffCharas(value["name"]),true,'')
                     frame:addLabel():setText(name):setPosition(1, 1)
-                    frame:addLabel():setText("id: " .. value["id"]):setPosition(1, 2)
+                    frame:addLabel():setText("ID: " .. value["id"]):setPosition(1, 2)
                     artistp,sartistp = pinyin(GetOffCharas(value["artists_name"]),true,'')
-                    frame:addLabel():setText("artists: " .. artistp ):setPosition(1, 3)
-                    a = a + 4
+                    frame:addLabel():setText("Artists: " .. artistp ):setPosition(1, 3)
+                    a = a + 3
+                    clr = clr+1
                 end
                 break;
             else
-                frame = GUI_in[3]:addFrame():setPosition(2, 2):setSize("parent.w-2", 3):setBackground(colors.lightBlue)
-                frame:addLabel():setText("Didnt search the song"):setPosition(1, 1)
+                frame = GUI_in[3]:addFrame():setPosition(1, 1):setSize("parent.w", 10):setBackground(colors.lightGray)
+                frame:addLabel():setText("TAT"):setPosition("parent.w"/2-2,1)
+                frame:addLabel():setText("Didnt search the song"):setPosition(1, 2)
                 break;
             end
         end
