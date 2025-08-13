@@ -375,7 +375,7 @@ function playmusic(music_name, music_id, play_table, index , artist_name)
     play_table_Gui[3]:clear()
     for index, value in ipairs(play_table) do
         name,sname = pinyin(GetOffCharas(value["name"]),true,'')
-        play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]),color.white,color.black)
+        play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]),colors.white,colors.black)
     end
     play_table_Gui[3]:selectItem(index)
     _G.music168_music_id = music_id
