@@ -364,8 +364,8 @@ function playmusic(music_name, music_id, play_table, index , artist_name)
     _G.Playstop = false
     name,sname = pinyin(GetOffCharas(music_name),true,'')
     play_Gui[2]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #music_name / 2, 1)
-    name,sname = pinyin(GetOffCharas(music_name),true,'')
-    play_Gui[3]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #tostring(music_id) / 2, 2)
+    name,sname = pinyin(GetOffCharas(artist_name),true,'')
+    play_Gui[3]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #artist_name / 2, 2)
     play_column_Gui[1]:setText(name .. " | " .. tostring(music_id))
     play_data_table["music"] = { ["music_id"] = music_id, ["music_name"] = music_name }
     play_data_table["play_table"] = play_table
