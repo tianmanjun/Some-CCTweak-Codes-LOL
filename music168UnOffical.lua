@@ -37,7 +37,10 @@ local sub         = {
         main[1]:addFrame():setPosition(1, "parent.h - 1"):setSize("parent.w", 1):setBackground(colors.lightGray):hide(),
     },
     ["play_table"] = {
-        mainf:addFrame():setPosition(2, "parent.h + 1"):setSize("parent.w-2", 13):setBackground(colors.orange),
+        mainf:addFrame():setPosition(2, "parent.h + 1"):setSize("parent.w-2", 13):setBackground(colors.red),
+    },
+    ["waitplay_table"] = {
+        mainf:addFrame():setPosition(2, "parent.h + 1"):setSize("parent.w-2", 13):setBackground(colors.blue),
     }
 }
 
@@ -46,27 +49,32 @@ play_Gui_UP       = mainf:addAnimation():setObject(sub["BF"][1]):move(1, 1, 0.3)
 play_Gui_DO       = mainf:addAnimation():setObject(sub["BF"][1]):move(1, mainf:getHeight() + 1, 1)
 play_table_Gui_UP = mainf:addAnimation():setObject(sub["play_table"][1]):move(2, mainf:getHeight() - 12, 0.3)
 play_table_Gui_DO = mainf:addAnimation():setObject(sub["play_table"][1]):move(2, mainf:getHeight() + 1, 1)
+waitplay_table_Gui_UP = mainf:addAnimation():setObject(sub["waitplay_table"][1]):move(2, mainf:getHeight() - 12, 0.3)
+waitplay_table_Gui_DO = mainf:addAnimation():setObject(sub["waitplay_table"][1]):move(2, mainf:getHeight() + 1, 1)
 --play_Gui_UP:play()
 --main[1]:hide()
 --main[1]:addAnimation():setObject(sub["BF"][1]):move(1,"parent.h+1",1.5):play()
 --创建播放界面
 play_name         = "NO Music"
 play_id           = "NO Music"
+play_artist       = "NO Music"
 play_Gui          = {
     sub["BF"][1]:addButton():setPosition(1, 1):setSize(3, 1):setText("V"):onClick(function()
         play_Gui_DO:play()
         play_GUI_state = false
         main[1]:enable()
     end):setBackground(colors.red):setForeground(colors.white),
-    sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_name / 2, 1)
+    sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_name / 2, 2):setSize("parent.w", 1)
         :setBackground(colors.red):setForeground(colors.white),
-    sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_id / 2, 2):setBackground(
-    colors.red):setForeground(colors.white),
+    sub["BF"][1]:addLabel():setText("NO Music"):setPosition(sub["BF"][1]:getWidth() / 2 - #play_id / 2, 3):setSize("parent.w", 1)
+        :setBackground(colors.red):setForeground(colors.white),
     sub["BF"][1]:addLabel():setText(""):setPosition(3, 4):setSize("parent.w-4", "parent.h-10"):setBackground(colors
     .white):setForeground(colors.red),--image
     sub["BF"][1]:addButton():setPosition(3, "parent.h-5"):setSize(1, 1):setText("\3"):onClick(function() end)
         :setForeground(colors.white):setBackground(colors.red),
-    sub["BF"][1]:addButton():setPosition(8, "parent.h-5"):setSize(1, 1):setText("\25"):onClick(function() end)
+    sub["BF"][1]:addButton():setPosition(8, "parent.h-5"):setSize(1, 1):setText("\25"):onClick(function() 
+
+    end)
         :setForeground(colors.white):setBackground(colors.red),
     sub["BF"][1]:addButton():setPosition("parent.w/2", "parent.h-5"):setSize(2, 1):setText("+-"):onClick(function() end)
         :setForeground(colors.white):setBackground(colors.red),
@@ -79,7 +87,11 @@ play_Gui          = {
     sub["BF"][1]:addLabel():setText("00:00"):setPosition("3", "parent.h - 3"):setSize(5, 1):setForeground(colors.white),
     sub["BF"][1]:addLabel():setText("00:00"):setPosition("parent.w - 6", "parent.h - 3"):setSize(5, 1):setForeground(
     colors.white),
-    sub["BF"][1]:addButton():setPosition(3, "parent.h - 2"):setSize(3, 1):setText("=O="):onClick(function() end)
+    sub["BF"][1]:addButton():setPosition(3, "parent.h - 2"):setSize(3, 1):setText("=O="):onClick(function() 
+        waitplay_table_Gui_UP:play()
+        main[1]:disable()
+        sub["BF"][1]:disable()
+    end)
         :setForeground(colors.white):setBackground(colors.red),
     sub["BF"][1]:addButton():setPosition("parent.w /2 - 4", "parent.h - 2"):setSize(2, 1):setText("|\17"):onClick(function()
         play_set_1() end):setForeground(colors.white):setBackground(colors.red),
@@ -117,13 +129,22 @@ play_column_Gui   = {
 }
 
 play_table_Gui    = {
-    sub["play_table"][1]:addButton():setPosition("parent.w-3", 1):setSize(3, 1):setText("V"):onClick(function()
+    sub["play_table"][1]:addButton():setPosition("parent.w-3", 2):setSize(3, 1):setText("\31"):onClick(function()
         if not play_GUI_state then main[1]:enable() end
         sub["BF"][1]:enable()
         play_table_Gui_DO:play()
     end):setBackground(colors.no):setForeground(colors.white),
-    sub["play_table"][1]:addLabel():setText("PlayTable"):setPosition(1, 1):setForeground(colors.white),
+    sub["play_table"][1]:addLabel():setText("PlayTable"):setPosition(2, 2):setForeground(colors.white),
     sub["play_table"][1]:addList():setPosition(2, 3):setSize("parent.w-2", "parent.h-2"):setScrollable(true),
+}
+waitplay_table_Gui    = {
+    sub["waitplay_table"][1]:addButton():setPosition("parent.w-3", 2):setSize(3, 1):setText("\31"):onClick(function()
+        if not play_GUI_state then main[1]:enable() end
+        sub["BF"][1]:enable()
+        waitplay_table_Gui_DO:play()
+    end):setBackground(colors.no):setForeground(colors.white),
+    sub["waitplay_table"][1]:addLabel():setText("PlayTable"):setPosition(2, 2):setForeground(colors.white),
+    sub["waitplay_table"][1]:addList():setPosition(2, 3):setSize("parent.w-2", "parent.h-2"):setScrollable(true),
 }
 
 --创建菜单栏
@@ -337,12 +358,13 @@ end
 
 
 --播放
-function playmusic(music_name, music_id, play_table, index)
+function playmusic(music_name, music_id, play_table, index , artist_name)
     _G.getPlay = 0
     _G.Playopen = false
     _G.Playstop = false
     name,sname = pinyin(GetOffCharas(music_name),true,'')
     play_Gui[2]:setText(name):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #music_name / 2, 1)
+    name,sname = pinyin(GetOffCharas(music_name),true,'')
     play_Gui[3]:setText(music_id):setPosition(sub["BF"][1]:getWidth() / 2 + 1 - #tostring(music_id) / 2, 2)
     play_column_Gui[1]:setText(name .. " | " .. tostring(music_id))
     play_data_table["music"] = { ["music_id"] = music_id, ["music_name"] = music_name }
@@ -353,7 +375,7 @@ function playmusic(music_name, music_id, play_table, index)
     play_table_Gui[3]:clear()
     for index, value in ipairs(play_table) do
         name,sname = pinyin(GetOffCharas(value["name"]),true,'')
-        play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]))
+        play_table_Gui[3]:addItem(name .. " | " .. tostring(value["id"]),color.white,color.black)
     end
     play_table_Gui[3]:selectItem(index)
     _G.music168_music_id = music_id
@@ -441,8 +463,7 @@ function Search(input_str, GUI_in, api)
                         play_Gui_UP:play()
                         play_GUI_state = true
                         main[1]:disable()
-                        playmusic(value["name"], value["id"], Search_table, index
-                    )
+                        playmusic(value["name"], value["id"], Search_table, index, value["artists_name"])
                     end)
                     
                     name,sname = pinyin(GetOffCharas(value["name"]),true,'')
@@ -536,7 +557,7 @@ function thread2()
                 _G.music168_playopen = false
                 sleep(0.1)
                 playmusic(play_data_table["play_table"][index]["name"], play_data_table["play_table"][index]["id"],
-                    play_data_table["play_table"], index)
+                    play_data_table["play_table"], index, play_data_table["artists_name"])
             end
         end
     end
