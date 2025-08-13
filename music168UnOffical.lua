@@ -206,7 +206,7 @@ function GetmusicUrl(music_id)
     while true do
         if _G.UserCookie ~= '' then
             local jsontb = { id = tostring(MusicID), level = "standard", cookie = Cookie }
-            httpi = http.post("https://apis.netstart.cn/music/song/url", textutils.serialiseJSON(jsontb),
+            httpi = http.post(server_url .. "api/song/url", textutils.serialiseJSON(jsontb),
                 { ["Content-Type"] = "application/json" })
         if httpi then
             local bstr = httpi.readAll()
@@ -264,8 +264,8 @@ end
 --dfpwm转码
 --------------图片相关------------------
 function GetCoverImageFromID(MusicID)
-    jsontb = { ids = tostring(MusicID) , timestamp=os.clock() }
-    httpi = http.post("https://apis.netstart.cn/music/song/detail", textutils.serialiseJSON(jsontb),
+    jsontb = { id = tostring(MusicID) }
+    httpi = http.post("http://music168.liulikeji.cn:15843/api/song/detail", textutils.serialiseJSON(jsontb),
         { ["Content-Type"] = "application/json" })
      tb = textutils.unserialiseJSON(httpi.readAll())
      picurl = tb["songs"][1]["al"]["picUrl"]
@@ -381,8 +381,7 @@ function Search(input_str, GUI_in, api)
             table_get = textutils.unserialiseJSON(json_str)
             if table_get["result"]["songCount"] ~= 0 then kg_a = true end
             if tonumber(input_str) then
-            jsontb = { ids = tostring(input_str),timestamp=os.clock()}
-            basalt.debug()
+            jsontb = { id = tostring(input_str)}
             httpGetFromID = http.post(server_url .. "api/song/detail", textutils.serialiseJSON(jsontb),
              { ["Content-Type"] = "application/json" })
                 json_str2 = httpGetFromID.readAll()
