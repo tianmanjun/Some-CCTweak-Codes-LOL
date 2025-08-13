@@ -557,7 +557,7 @@ function thread2()
                 _G.music168_playopen = false
                 sleep(0.1)
                 playmusic(play_data_table["play_table"][index]["name"], play_data_table["play_table"][index]["id"],
-                    play_data_table["play_table"], index, play_data_table["artists_name"])
+                    play_data_table["play_table"], index, play_data_table["play_table"][index]["artists_name"])
             end
         end
     end
